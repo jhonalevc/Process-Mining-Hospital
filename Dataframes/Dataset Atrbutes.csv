@@ -1,0 +1,19 @@
+Name,Description
+actOrange, A flag that is used in connected with services that   may not be covered by the standard health insurance.
+actRed, A flag that is used in connected with services that   may not be covered by the standard health insurance. 
+blocked," flag that is used when the billing may not proceeed   (i. e., is blocked)."
+caseType," A code for the type of the billing package, which  may influence it's handling."
+closeCode," There may be several reasons to close a billing  package, this attribute stores the code used."
+diagnosis, A code for the diagnosis used in the billing package.
+flagA, An anonymized flag.
+flagB, An anonymized flag.
+flagC, An anonymized flag.
+flagD, An anonymized flag.
+isCancelled, A flag that indicates whether the billing package  was eventually cancelled.
+isClosed, A flag that indicates whether the billing package  was eventually closed.
+msgCode, The code returned.
+msgCount, The number of messages returned.
+msgType, The type of messages returned.
+speciality, A code for the medical speciality involved.
+state, Stores the current state of the billing package.
+version, A code for the version of the rules  governing the process.
