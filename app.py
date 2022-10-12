@@ -269,7 +269,7 @@ if selectbox == 'timing':
     global time_df_total_merged
     df_timing = pd.read_csv(r'Dataframes\time_eventlog.csv')
     df_timing['time:timestamp'] = pd.to_datetime(df_timing['time:timestamp'])
-    df_traces_ = pd.read_csv(r'Dataframes\case_name_variant.csv')
+    df_traces_ = pd.read_csv(r'Dataframes/case_name_variant.csv')
     time_df_total = df_timing.groupby('case:concept:name')['interval'].sum().to_frame().reset_index()
     time_df_total_merged = time_df_total.merge(df_traces_, left_on ='case:concept:name', right_on = 'Case' ) 
     time_df_total_merged_aa = df_timing.merge(df_traces_, left_on ='case:concept:name', right_on = 'Case' )
