@@ -9,7 +9,7 @@ from PIL import Image
 from io import BytesIO
 
 
-#xes_data = pm4py.read_xes('12705113\Hospital Billing - Event Log.xes.gz')
+#xes_data = pm4py.read_xes('12705113/Hospital Billing - Event Log.xes.gz')
 #eventlog_df = pm4py.convert_to_dataframe(xes_data)
 
 st.set_page_config(layout='wide')
@@ -36,7 +36,7 @@ if selectbox == 'Intro':
 
     y1,y2 = st.columns(2)
     with y2:
-        st.image(r'Images\1-j3dTgXjyaYPo9XkM6UMZ3g-removebg-preview.png',use_column_width=True )
+        st.image(r'Images/1-j3dTgXjyaYPo9XkM6UMZ3g-removebg-preview.png',use_column_width=True )
     with y1:
         st.markdown("<br>",unsafe_allow_html=True)
         st.markdown("<br>",unsafe_allow_html=True)
@@ -57,7 +57,7 @@ if selectbox == 'Intro':
     with st.expander("Expand to see the basic layout of the project architecture"):
         v1,v2,v3,v4,v5,v6,v7 = st.columns([1,1,1,17,1,1,1]) 
         with v4: 
-            st.image(r'Images\Capture-removebg-preview.png',use_column_width=True )
+            st.image(r'Images/Capture-removebg-preview.png',use_column_width=True )
     i1,i2 = st.columns([2,1])
     with i1:
         st.markdown("""
@@ -102,7 +102,7 @@ if selectbox == 'overview':
 
     # ----------------------- Header Info --------------------
 
-    data_header = pd.read_csv('Dataframes\header_info.csv')
+    data_header = pd.read_csv('Dataframes/header_info.csv')
     with st.container():
         with st.expander('Filter Data!'):
             option_header_period = st.selectbox(
@@ -138,7 +138,7 @@ if selectbox == 'overview':
     # ---------------------  Main plot ----------------------------- 
 
 
-    month_ = pd.read_csv(r'Dataframes\count_month.csv')
+    month_ = pd.read_csv(r'Dataframes/count_month.csv')
     month_['month_year'] = pd.to_datetime(month_['month_year'])
     month_ = month_.drop(month_.columns.to_list()[0], axis=1)
 
@@ -183,12 +183,12 @@ if selectbox == 'overview':
 
     with st.container():
 
-        variants_total_df = pd.read_csv(r'Dataframes\variants_total_df.csv')
+        variants_total_df = pd.read_csv(r'Dataframes/variants_total_df.csv')
         variants_total_df['%'] = variants_total_df['len_Data'] /variants_total_df['len_Data'].sum() * 100
-        events_per_case_df = pd.read_csv(r'Dataframes\events_per_case_df.csv')
+        events_per_case_df = pd.read_csv(r'Dataframes/events_per_case_df.csv')
         events_per_case_df['Events per case'] = events_per_case_df['Events per case'].astype(str)
         events_per_case_df['%'] = events_per_case_df['Count'] / events_per_case_df['Count'].sum() * 100
-        activities_per_case = pd.read_csv(r'Dataframes\activities per case.csv')
+        activities_per_case = pd.read_csv(r'Dataframes/activities per case.csv')
 
         col_1,col_2,col_3 = st.columns(3)
         with col_1:
@@ -222,9 +222,9 @@ if selectbox == 'overview':
 
 
 
-    df_canceled = pd.read_csv('Dataframes\df_canceled.csv')
+    df_canceled = pd.read_csv('Dataframes/df_canceled.csv')
     df_canceled = df_canceled.drop(df_canceled.columns.to_list()[0],axis =1)
-    df_closed = pd.read_csv('Dataframes\df_closed.csv')
+    df_closed = pd.read_csv('Dataframes/df_closed.csv')
     df_closed = df_closed.drop(df_closed.columns.to_list()[0],axis=1)
     with st.container():
         column1, column2 = st.columns(2)
@@ -267,7 +267,7 @@ if selectbox == 'overview':
 
 if selectbox == 'timing':
     global time_df_total_merged
-    df_timing = pd.read_csv(r'Dataframes\time_eventlog.csv')
+    df_timing = pd.read_csv(r'Dataframes/time_eventlog.csv')
     df_timing['time:timestamp'] = pd.to_datetime(df_timing['time:timestamp'])
     df_traces_ = pd.read_csv(r'Dataframes/case_name_variant.csv')
     time_df_total = df_timing.groupby('case:concept:name')['interval'].sum().to_frame().reset_index()
@@ -427,13 +427,13 @@ if selectbox == 'timing':
                     Progress Anlysis
                 </h1>""",unsafe_allow_html=True)
             select_process_ = st.selectbox('Choose Flow',["All Variants" ,"Best Path","Relevant Variants"], index = 2)
-            summary_time_all = pd.read_csv(r'Dataframes\summary_time_all.csv')
-            summary_time_relevant = pd.read_csv(r'Dataframes\summary_time_relevant.csv')
-            summary_time_best = pd.read_csv(r'Dataframes\summary_time_best.csv')
+            summary_time_all = pd.read_csv(r'Dataframes/summary_time_all.csv')
+            summary_time_relevant = pd.read_csv(r'Dataframes/summary_time_relevant.csv')
+            summary_time_best = pd.read_csv(r'Dataframes/summary_time_best.csv')
             if select_process_ == "All Variants":
                 g1,g2 = st.columns([1,1])
                 with g1:
-                    im_all_variants = Image.open('Images\Heuristic-net-allvariants.png')
+                    im_all_variants = Image.open('Images/Heuristic-net-allvariants.png')
                     st.image(im_all_variants, use_column_width=True)
                 with g2:
                     st.markdown("""<hr>""",unsafe_allow_html=True)
@@ -455,7 +455,7 @@ if selectbox == 'timing':
                         st.markdown("""<p style='text-align:center'>""" + str(round(max_hour_r_,2)) + """</p>""",unsafe_allow_html=True)
                     st.markdown("""<hr>""",unsafe_allow_html=True)
                     st.markdown("""<b><h3 style='text-align:center'> Time per activity </h3></b>""",unsafe_allow_html =True)
-                    dataframe_all_variant_act = pd.read_csv(r'Dataframes\dataframe_all_variant_act_full.csv')
+                    dataframe_all_variant_act = pd.read_csv(r'Dataframes/dataframe_all_variant_act_full.csv')
                     time_selector_1 = st.select_slider('Hours - Days',dataframe_all_variant_act['time'].unique(),label_visibility='hidden')
                     st.dataframe(dataframe_all_variant_act[dataframe_all_variant_act['time'] == time_selector_1],use_container_width=True)
                 st.markdown("<hr>",unsafe_allow_html=True)
@@ -463,7 +463,7 @@ if selectbox == 'timing':
             if select_process_ == 'Best Path':
                 g1,g2 = st.columns([1,2])
                 with g1:
-                    im_best = Image.open('Images\Heuristic-net-best.png')
+                    im_best = Image.open('Images/Heuristic-net-best.png')
                     im_best = im_best.resize((380,670))
                     st.image(im_best)
                 with g2:
@@ -484,14 +484,14 @@ if selectbox == 'timing':
                         _cd_ =st.select_d = st.selectbox('selectaayy',label_visibility='hidden',options= summary_time_best.columns.to_list())
                         max_hour_s_ = summary_time_best.loc[2,_cd_]
                         st.markdown("""<p style='text-align:center'>""" + str(round(max_hour_s_,2)) + """</p>""",unsafe_allow_html=True)
-                    dataframe_best_act_full = pd.read_csv(r'Dataframes\dataframe_best_act_full.csv')
+                    dataframe_best_act_full = pd.read_csv(r'Dataframes/dataframe_best_act_full.csv')
                     d_select = st.select_slider("sdd",label_visibility='hidden',options = dataframe_best_act_full['time'].unique())
                     st.dataframe(dataframe_best_act_full[dataframe_best_act_full['time'] == d_select],use_container_width=True)
             
             if select_process_ == "Relevant Variants":
                 g1,g2 = st.columns([1,2])
                 with g1:
-                    im_relevant = Image.open('Images\Heuristic-net-relevant.png')
+                    im_relevant = Image.open('Images/Heuristic-net-relevant.png')
                     im_relevant = im_relevant.resize((450,800))
                     st.image(im_relevant)
                 with g2:
@@ -511,7 +511,7 @@ if selectbox == 'timing':
                         _d_ =st.select_d = st.selectbox('select_11!qq',label_visibility='hidden',options= summary_time_relevant.columns.to_list())
                         mean_hour_x_ = summary_time_relevant.loc[2,_d_]
                         st.markdown("""<p style='text-align:center'>""" + str(round(mean_hour_x_,2)) + """</p>""",unsafe_allow_html=True)
-                    dataframe_relevant_act_ = pd.read_csv('Dataframes\dataframe_all_relevant_act_full.csv')
+                    dataframe_relevant_act_ = pd.read_csv('Dataframes/dataframe_all_relevant_act_full.csv')
                     sele_timer = st.select_slider("Hours - Days",dataframe_relevant_act_['time'].unique(),label_visibility='hidden')
                     st.dataframe(dataframe_relevant_act_[dataframe_relevant_act_['time']==sele_timer], use_container_width=True)
                 st.markdown("<hr>",unsafe_allow_html=True)
@@ -555,21 +555,21 @@ if selectbox == 'process':
             col1__,col2__,  = st.columns([1,1])
             with col1__:
                 st.markdown("""<h3 style='text-align: center'>Heurist Net</h3>""",unsafe_allow_html=True)
-                st.image('Images\Heuristic-net-allvariants.png',use_column_width=True)
+                st.image('Images/Heuristic-net-allvariants.png',use_column_width=True)
             with col2__:
                 st.markdown("""<h3 style='text-align:center'> Starting Activities </h3>""",unsafe_allow_html=True)
-                start_Activities_all_variants = pd.read_csv(r'Dataframes\start_Activities_all_variants.csv')
+                start_Activities_all_variants = pd.read_csv(r'Dataframes/start_Activities_all_variants.csv')
                 start_Activities_all_variants = start_Activities_all_variants.drop(start_Activities_all_variants.columns.to_list()[0],axis =1)
                 start_Activities_all_variants
                 st.markdown("""<h3 style='text-align:center'> End Activities </h3>""",unsafe_allow_html=True)
-                end_activities_allvariants = pd.read_csv(r'Dataframes\end_activities_allvariants.csv')
+                end_activities_allvariants = pd.read_csv(r'Dataframes/end_activities_allvariants.csv')
                 end_activities_allvariants = end_activities_allvariants.drop(end_activities_allvariants.columns.to_list()[0],axis =1)
                 end_activities_allvariants_ = end_activities_allvariants.T
                 end_activities_allvariants_.columns = end_activities_allvariants_.loc['ends',:]
                 end_activities_allvariants_ = end_activities_allvariants_.drop('ends',axis=0)
                 end_activities_allvariants_
                 st.markdown("""<h3 style='text-align:center'> Download net </h3>""",unsafe_allow_html=True)
-                im = Image.open(r'Images\Heuristic-net-allvariants.png')
+                im = Image.open(r'Images/Heuristic-net-allvariants.png')
                 buf = BytesIO()
                 im.save(buf,format="png")
                 byte_im = buf.getvalue()
@@ -582,17 +582,17 @@ if selectbox == 'process':
             st.markdown("<hr>",unsafe_allow_html=True)
             with st.container():
                 st.markdown("""<h3 style='text-align:center'>  Business Process Model  </h3>""",unsafe_allow_html=True)
-                st.image(r'Images\bpmn_allvariants.png')
+                st.image(r'Images/bpmn_allvariants.png')
                 co1,co2,co3,co4,co5 = st.columns(5)
                 with co3:
-                    im_bp_all = Image.open(r'Images\bpmn_allvariants.png')
+                    im_bp_all = Image.open(r'Images/bpmn_allvariants.png')
                     buf__ = BytesIO()
                     im_bp_all.save(buf__,format='png')
                     bytes_im_bp = buf__.getvalue()
                     st.download_button("Click to Download", data=bytes_im_bp , mime="image/jpeg")
             st.markdown("<hr>",unsafe_allow_html=True)
             st.markdown("""<h3 style='text-align:center'>  Variants  </h3>""",unsafe_allow_html=True)
-            variants_total_df__ = pd.read_csv(r'Dataframes\allvariants-details.csv')
+            variants_total_df__ = pd.read_csv(r'Dataframes/allvariants-details.csv')
             __  = []
             for trace in variants_total_df__['variant']:
                 x = list(trace)
@@ -627,15 +627,15 @@ if selectbox == 'process':
             st.markdown("<hr>",unsafe_allow_html=True)
             with st.container():
                 st.markdown("""<h3 style='text-align:center'>  Aditional Process Maps  </h3>""",unsafe_allow_html=True)
-                petri_inductive_img = Image.open(r'Images\petri_net__inductive_all_variants.png')
+                petri_inductive_img = Image.open(r'Images/petri_net__inductive_all_variants.png')
                 buf_pet_ind = BytesIO()
                 petri_inductive_img.save(buf_pet_ind,format='png')
                 bytes_petri_inductive = buf_pet_ind.getvalue()
-                petri_alpha_img = Image.open(r'Images\Petri_net_alpha_allvariants.png')
+                petri_alpha_img = Image.open(r'Images/Petri_net_alpha_allvariants.png')
                 buf_pet_alpha = BytesIO()
                 petri_alpha_img.save(buf_pet_alpha,format='png')
                 bytes_petri_alpha = buf_pet_alpha.getvalue()
-                petri_alphaplus_img = Image.open(r'Images\Petri_net_alphaplus_best.png')
+                petri_alphaplus_img = Image.open(r'Images/Petri_net_alphaplus_best.png')
                 buf_pet_alphaplus = BytesIO()
                 petri_alphaplus_img.save(buf_pet_alphaplus,format='png')
                 bytes_petri_alphaplus = buf_pet_alphaplus.getvalue()
@@ -654,16 +654,16 @@ if selectbox == 'process':
             col1__,col2__,  = st.columns([1,1])
             with col1__:
                 st.markdown("""<h3 style='text-align: center'>Heurist Net</h3>""",unsafe_allow_html=True)
-                i_img = Image.open(r'Images\Heuristic-net-best.png')
+                i_img = Image.open(r'Images/Heuristic-net-best.png')
                 i_img_ = i_img.resize((400,650))
                 st.image(i_img_,use_column_width=False)
             with col2__:
                 st.markdown("""<h3 style='text-align:center'> Starting Activities </h3>""",unsafe_allow_html=True)
-                start_Activities_best= pd.read_csv(r'Dataframes\start_activities_best.csv')
+                start_Activities_best= pd.read_csv(r'Dataframes/start_activities_best.csv')
                 start_Activities_best = start_Activities_best.drop(start_Activities_best.columns.to_list()[0],axis =1)
                 start_Activities_best
                 st.markdown("""<h3 style='text-align:center'> End Activities </h3>""",unsafe_allow_html=True)
-                end_activities_best = pd.read_csv(r'Dataframes\end_activities_best.csv')
+                end_activities_best = pd.read_csv(r'Dataframes/end_activities_best.csv')
                 end_activities_best = end_activities_best.drop(end_activities_best.columns.to_list()[0],axis=1)
                 end_activities_best_ = end_activities_best.T
                 end_activities_best_.columns = end_activities_best_.loc['Activity',:]
@@ -682,17 +682,17 @@ if selectbox == 'process':
         st.markdown("<hr>",unsafe_allow_html=True)
         with st.container():
                 st.markdown("""<h3 style='text-align:center'>  Business Process Model  </h3>""",unsafe_allow_html=True)
-                st.image(r'Images\bpmn_best.png',use_column_width=True)
+                st.image(r'Images/bpmn_best.png',use_column_width=True)
                 co1__a,co2__a,co3__a,co4__a,co5__a = st.columns(5)
                 with co3__a:
-                    im_bp_best = Image.open(r'Images\bpmn_best.png')
+                    im_bp_best = Image.open(r'Images/bpmn_best.png')
                     buf__best = BytesIO()
                     im_bp_best.save(buf__best,format='png')
                     bytes_im_bp_best = buf__best.getvalue()
                     st.download_button("Click to Download", data=bytes_im_bp_best , mime="image/jpeg")
         st.markdown("<hr>",unsafe_allow_html=True)
         st.markdown("""<h3 style='text-align:center'>  Variants  </h3>""",unsafe_allow_html=True)
-        variants_best_df__ = pd.read_csv(r'Dataframes\best_variants_details.csv')
+        variants_best_df__ = pd.read_csv(r'Dataframes/best_variants_details.csv')
         __  = []
         for trace in variants_best_df__['variant']:
             x = list(trace)
@@ -727,15 +727,15 @@ if selectbox == 'process':
         st.markdown("<hr>",unsafe_allow_html=True)
         with st.container():
             st.markdown("""<h3 style='text-align:center'>  Aditional Process Maps  </h3>""",unsafe_allow_html=True)
-            petri_inductive_img = Image.open(r'Images\petri_net_inductive_best.png')
+            petri_inductive_img = Image.open(r'Images/petri_net_inductive_best.png')
             buf_pet_ind = BytesIO()
             petri_inductive_img.save(buf_pet_ind,format='png')
             bytes_petri_inductive = buf_pet_ind.getvalue()
-            petri_alpha_img = Image.open(r'Images\Petri_net_alpha_best.png')
+            petri_alpha_img = Image.open(r'Images/Petri_net_alpha_best.png')
             buf_pet_alpha = BytesIO()
             petri_alpha_img.save(buf_pet_alpha,format='png')
             bytes_petri_alpha = buf_pet_alpha.getvalue()
-            petri_alphaplus_img = Image.open(r'Images\Petri_net_alphaplus_best.png')
+            petri_alphaplus_img = Image.open(r'Images/Petri_net_alphaplus_best.png')
             buf_pet_alphaplus = BytesIO()
             petri_alphaplus_img.save(buf_pet_alphaplus,format='png')
             bytes_petri_alphaplus = buf_pet_alphaplus.getvalue()
@@ -754,16 +754,16 @@ if selectbox == 'process':
             col1__,col2__,  = st.columns([1,1])
             with col1__:
                 st.markdown("""<h3 style='text-align: center'>Heurist Net</h3>""",unsafe_allow_html=True)
-                i_img = Image.open(r'Images\Heuristic-net-relevant.png')
+                i_img = Image.open(r'Images/Heuristic-net-relevant.png')
                 i_img_ = i_img.resize((400,650))
                 st.image(i_img_,use_column_width=False)
             with col2__:
                 st.markdown("""<h3 style='text-align:center'> Starting Activities </h3>""",unsafe_allow_html=True)
-                start_Activities_best= pd.read_csv(r'Dataframes\start_activities_relevant.csv')
+                start_Activities_best= pd.read_csv(r'Dataframes/start_activities_relevant.csv')
                 start_Activities_best = start_Activities_best.drop(start_Activities_best.columns.to_list()[0],axis =1)
                 start_Activities_best
                 st.markdown("""<h3 style='text-align:center'> End Activities </h3>""",unsafe_allow_html=True)
-                end_activities_best = pd.read_csv(r'Dataframes\end_activities_relevant.csv')
+                end_activities_best = pd.read_csv(r'Dataframes/end_activities_relevant.csv')
                 end_activities_best = end_activities_best.drop(end_activities_best.columns.to_list()[0],axis=1)
                 end_activities_best_ = end_activities_best.T
                 end_activities_best_.columns = end_activities_best_.loc['Activity',:]
@@ -782,17 +782,17 @@ if selectbox == 'process':
         st.markdown("<hr>",unsafe_allow_html=True)
         with st.container():
                 st.markdown("""<h3 style='text-align:center'>  Business Process Model  </h3>""",unsafe_allow_html=True)
-                st.image(r'Images\bpmn_relevant.png',use_column_width=True)
+                st.image(r'Images/bpmn_relevant.png',use_column_width=True)
                 co1__a,co2__a,co3__a,co4__a,co5__a = st.columns(5)
                 with co3__a:
-                    im_bp_best = Image.open(r'Images\bpmn_relevant.png')
+                    im_bp_best = Image.open(r'Images/bpmn_relevant.png')
                     buf__best = BytesIO()
                     im_bp_best.save(buf__best,format='png')
                     bytes_im_bp_best = buf__best.getvalue()
                     st.download_button("Click to Download", data=bytes_im_bp_best , mime="image/jpeg")
         st.markdown("<hr>",unsafe_allow_html=True)
         st.markdown("""<h3 style='text-align:center'>  Variants  </h3>""",unsafe_allow_html=True)
-        variants_best_df__ = pd.read_csv(r'Dataframes\relevant_variants_details.csv')
+        variants_best_df__ = pd.read_csv(r'Dataframes/relevant_variants_details.csv')
         __  = []
         for trace in variants_best_df__['variant']:
             x = list(trace)
@@ -827,15 +827,15 @@ if selectbox == 'process':
         st.markdown("<hr>",unsafe_allow_html=True)
         with st.container():
             st.markdown("""<h3 style='text-align:center'>  Aditional Process Maps  </h3>""",unsafe_allow_html=True)
-            petri_inductive_img = Image.open(r'Images\petri_net_inductive_relevant.png')
+            petri_inductive_img = Image.open(r'Images/petri_net_inductive_relevant.png')
             buf_pet_ind = BytesIO()
             petri_inductive_img.save(buf_pet_ind,format='png')
             bytes_petri_inductive = buf_pet_ind.getvalue()
-            petri_alpha_img = Image.open(r'Images\Petri_net_alpha_best.png')
+            petri_alpha_img = Image.open(r'Images/Petri_net_alpha_best.png')
             buf_pet_alpha = BytesIO()
             petri_alpha_img.save(buf_pet_alpha,format='png')
             bytes_petri_alpha = buf_pet_alpha.getvalue()
-            petri_alphaplus_img = Image.open(r'Images\Petri_net_alphaplus_best.png')
+            petri_alphaplus_img = Image.open(r'Images/Petri_net_alphaplus_best.png')
             buf_pet_alphaplus = BytesIO()
             petri_alphaplus_img.save(buf_pet_alphaplus,format='png')
             bytes_petri_alphaplus = buf_pet_alphaplus.getvalue()
@@ -863,7 +863,7 @@ if selectbox =='data':
     #ss = eventlog_df.copy()
     #ss = ss.loc[(ss['case:concept:name'].isin(['A','B','ZZZ']))]
     #ss.to_csv('sample_eventolog.csv')
-    sample_data = pd.read_csv(r'Dataframes\sample_eventolog.csv')
+    sample_data = pd.read_csv(r'Dataframes/sample_eventolog.csv')
     sample_data = sample_data.drop(sample_data.columns.to_list()[0], axis =1)
     st.dataframe(sample_data,use_container_width=True)
 
@@ -900,7 +900,7 @@ if selectbox =='data':
                 Atributes
             </h1>
             """,unsafe_allow_html=True)
-            attributes = pd.read_csv(r"Dataframes\Dataset Atrbutes.csv")
+            attributes = pd.read_csv(r"Dataframes/Dataset Atrbutes.csv")
             attributes
             
 
